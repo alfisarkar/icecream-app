@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Funny Ice Cream Button</title>
+  <style>
+    body {
+      background-color: #ccffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      transition: background 0.5s ease;
+      overflow: hidden;
+    }
+    #iceButton {
+      background-color: green;
+      color: white;
+      font-size: 24px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s ease;
+    }
+    #iceButton:hover {
+      animation: wiggle 0.5s ease-in-out infinite;
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(3deg); }
+      75% { transform: rotate(-3deg); }
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      display: none;
+      animation: bounce 1s ease infinite, fadeIn 1s ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    #bgOptions {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    label, button.theme-btn {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: float 2s ease-out forwards;
+    }
+    @keyframes float {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-100px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="bgOptions">
+    <button class="theme-btn" onclick="setLightGreen()">Light Green</button>
+    <button class="theme-btn" onclick="setSkyBlue()">Sky Blue</button>
+    <button class="theme-btn" onclick="setGradient()">Gradient</button>
+    <label for="bgUpload">Upload Background</label>
+    <input type="file" id="bgUpload" accept="image/*" onchange="setCustomBackground(event)">
+  </div>
+  <button id="iceButton" onclick="handleIceCreamClick()">🍦 আইসক্রিম</button>
+  <div id="message"></div>
+  <audio id="sound1" src="funny1.mp3" preload="auto"></audio>
+  <audio id="sound2" src="funny2.mp3" preload="auto"></audio>
+  <script>
+    const messages = [
+      "কিরে খাবি নাকি নিজে কিনা খা গিয়া 😂",
+      "এইটা আমার! 🤪",
+      "চুষতে চুষতে গেলা! 😝",
+      "এত তাড়াতাড়ি কেন? 🐸",
+      "ঠান্ডা ঠান্ডা কুল কুল 🧊"
+    ];
+    function handleIceCreamClick() {
+      showRandomMessage();
+      playRandomSound();
+      launchConfetti();
+      floatEmoji();
+    }
+    function showRandomMessage() {
+      const msg = document.getElementById("message");
+      const randomText = messages[Math.floor(Math.random() * messages.length)];
+      msg.textContent = randomText;
+      msg.style.display = "block";
+      setTimeout(() => { msg.style.display = "none"; }, 60000);
+    }
+    function playRandomSound() {
+      const sounds = [document.getElementById("sound1"), document.getElementById("sound2")];
+      const sound = sounds[Math.floor(Math.random() * sounds.length)];
+      sound.currentTime = 0;
+      sound.play();
+    }
+    function setLightGreen() {
+      document.body.style.background = "#ccffcc";
+      document.body.style.backgroundImage = "";
+    }
+    function setSkyBlue() {
+      document.body.style.background = "#cceeff";
+      document.body.style.backgroundImage = "";
+    }
+    function setGradient() {
+      document.body.style.backgroundImage = "linear-gradient(135deg, #c2ffd8, #7abaff)";
+    }
+    function setCustomBackground(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.body.style.backgroundImage = `url(${e.target.result})`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    function launchConfetti() {
+      for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'emoji';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.top = `${50 + Math.random() * 30}%`;
+        confetti.textContent = ['🎉','🍦','🤣','😂','😜'][Math.floor(Math.random() * 5)];
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2000);
+      }
+    }
+    function floatEmoji() {
+      const emoji = document.createElement('div');
+      emoji.className = 'emoji';
+      emoji.style.left = `${Math.random() * 90}%`;
+      emoji.style.top = `${Math.random() * 90}%`;
+      emoji.textContent = ['😋','🤪','🤑','🤯','😆'][Math.floor(Math.random() * 5)];
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 2000);
+    }
+  </script>
+</body>
+</html>

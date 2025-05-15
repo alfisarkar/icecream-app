@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>আইসক্রিম মজা শুরু!</title>
+  <style>
+    body {
+      background-color: #f0fff0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      color: #2e8b57;
+    }
+    p {
+      font-size: 20px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+    .start-btn {
+      font-size: 24px;
+      padding: 15px 30px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .start-btn:hover {
+      background-color: darkgreen;
+      transform: scale(1.05);
+    }
+    .floating-ice {
+      position: absolute;
+      font-size: 2rem;
+      animation: float 5s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0% { top: 110%; opacity: 0; }
+      30% { opacity: 1; }
+      100% { top: -10%; opacity: 0; }
+    }
+    #bgControls {
+      position: absolute;
+      bottom: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    input[type="file"] { display: none; }
+    label, .bg-btn {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+    .bg-btn:hover, label:hover {
+      background: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍦 আইসক্রিমের রাজ্যে স্বাগতম!</h1>
+  <p>মজার মজার জোকস, সাউন্ড আর ফান নিয়ে বানানো আইসক্রিম অ্যাপ 😋</p>
+  <a href="icecream.html">
+    <button class="start-btn">👉 শুরু করো</button>
+  </a>
+  <div class="floating-ice" style="left: 10%;">🍦</div>
+  <div class="floating-ice" style="left: 30%; animation-delay: 1s;">😂</div>
+  <div class="floating-ice" style="left: 50%; animation-delay: 2s;">🍧</div>
+  <div class="floating-ice" style="left: 70%; animation-delay: 3s;">🤣</div>
+  <div class="floating-ice" style="left: 90%; animation-delay: 4s;">🍦</div>
+  <div id="bgControls">
+    <button class="bg-btn" onclick="setHomeBG('#f0fff0')">Light Green</button>
+    <button class="bg-btn" onclick="setHomeBG('#e0f7fa')">Sky Blue</button>
+    <button class="bg-btn" onclick="setHomeGradient()">Gradient</button>
+    <label for="bgUpload">📸 Background</label>
+    <input type="file" id="bgUpload" accept="image/*" onchange="uploadHomeBG(event)">
+  </div>
+  <script>
+    function setHomeBG(color) {
+      document.body.style.background = color;
+      document.body.style.backgroundImage = "";
+    }
+    function setHomeGradient() {
+      document.body.style.backgroundImage = "linear-gradient(135deg, #f2ffd5, #bde3ff)";
+    }
+    function uploadHomeBG(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.body.style.backgroundImage = `url(${e.target.result})`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          document.body.style.backgroundRepeat = 'no-repeat';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html>
